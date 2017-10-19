@@ -14,6 +14,17 @@ app.use(express.static(publicPath));
 
 io.on('connection',(socket)=>{ // socket app is a parameter from index page io is a connection on is a method
 console.log('New User Conneted');
+
+socket.emit('NewMessage',{ //emit matlab jo message bhjraha hai
+  from:'asadzaidi625@kkk.com',
+  msg:'Hello sending from a server side to a client',
+  createAt:1234
+});//newEmail is the defined in index custom event
+
+socket.on('createMessage',(message)=>{ //receiving from clint side
+  console.log('createMessage',message);
+});
+
 socket.on('disconnect',()=>{
   console.log('User was disconnected');
 });
