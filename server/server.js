@@ -25,10 +25,10 @@ socket.emit('NewMessage',generateMessage('Admin','Welcome to the Chat app'));
 socket.broadcast.emit('NewMessage',generateMessage('Admin','New User Has Joined this'));
 
 
-socket.on('createMessage',(message)=>{
+socket.on('createMessage',(message,callback)=>{ //callback is a function return from index emit
   console.log('createMessage',message);
   io.emit('NewMessage',generateMessage(message.from,message.text));
-
+  callback('This is from the server');
   // socket.broadcast.emit('NewMessage',{ //broadcast use when sending to everyone except yourself
   //   from:message.from,
   //   text:message.text,

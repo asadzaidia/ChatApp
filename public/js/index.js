@@ -13,4 +13,24 @@ socket.on('disconnect',function(){
 
 socket.on('NewMessage',function(message){ //custom event
   console.log('NewMessage',message);
+  var li=jQuery('<li></li>');//creating element
+  li.text(`${message.from}: ${message.text}`);
+  jQuery('#messages').append(li);
+});
+
+// socket.emit('createMessage',{
+//   from:'asad',
+//   text:'hi'
+// },function(data){//data return from callback
+//   console.log('Got It',data);
+// });
+
+jQuery('#message-form').on('submit',function(e){
+  e.preventDefault();
+  socket.emit('createMessage',{
+    from:'User',
+    text:jQuery('[name=message]').val()
+  },function(){
+
+  });
 });
