@@ -1,4 +1,21 @@
 var socket=io();//make connection and save it in socket variable
+
+function scrollToBottom(){//function for auto scrolling
+  //Selectors
+  var message=jQuery('#messages');
+  var NewMessage=message.children('li:last-child')//give last child
+  //Heights
+
+  var clientHeight=message.prop('clientHeight');// builtin in js to get Heights
+  var scrollTop=message.prop('scrollTop');
+  var scrollHeight=message.prop('scrollHeight');
+  var newMessageHeight=NewMessage.innerHeight();
+  var lastMessageHeight=NewMessage.prev().innerHeight();
+  if(clientHeight+scrollTop+newMessageHeight+lastMessageHeight>=scrollHeight){
+    message.scrollTop('scrollHeight');
+  }
+
+}
 socket.on('connect',function(){ //on connection
   console.log('connected to server');
   // socket.emit('createMessage',{
@@ -23,7 +40,7 @@ var html=Mustache.render(template,{
   createdAt:formattedTime
 });
 jQuery('#messages').append(html);
-
+scrollToBottom();
 
 });
 
@@ -48,6 +65,7 @@ socket.on('newLocationMessage',function(message){
   });
 
     jQuery('#messages').append(html);
+    scrollToBottom();
 });
 
 jQuery('#message-form').on('submit',function(e){
